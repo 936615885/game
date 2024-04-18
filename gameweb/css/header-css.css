@@ -1,0 +1,343 @@
+/* 导航栏最小的占用长度为1152px */
+.header-site {
+  min-width: 1152px;
+  /* 高度150px是将三个头部导航都放到了一块 */
+  height: 150px;
+}
+
+.header-site .first-header {
+  min-width: 1152px;
+  background-color: #2a2a2a;
+  /* height 等于 line-height ： 文本居中对齐 */
+  height: 32px;
+  line-height: 32px;
+}
+
+.header-site .first-header a {
+  color: white;
+}
+
+/* ----- 1、左侧导航 start ----- */
+
+/* 将整个左侧导航左浮动 */
+/* 这是的浮动影响的是左右导航 */
+.header-site .first-header .first-header-left {
+  float: left;
+}
+
+/* 这里的浮动影响的是li */
+.header-site .first-header .first-header-left > ul >li{
+  float: left;
+  /* 各个导航之间应存在空隙 使用右边距是让左边是完整贴合*/
+  margin-right: 18px;
+  /* 字体大小 */
+  font-size: 14px;
+}
+
+/* 最后一个元素，不需要右边框 */
+.header-site .first-header .first-header-left > ul >li:last-child{
+  margin-right: 0;
+}
+
+/* ------- 1.1、社区展开 start ------- */
+
+.header-site .first-header .first-header-left > ul >li.have-down-menu {
+  /* 给存12px的右填充，是为arrow放置倒三角的 */
+  padding-right: 12px;
+  /* 父相子绝 */
+  position: relative;
+}
+
+/* 在12px的内填充中做绝对定位 */
+.header-site .first-header .first-header-left > ul >li.have-down-menu .arrow {
+  position: absolute;
+  /* 定一个与内填充宽度一样的12px正方形 */
+  /* 倒三角就是在这个正方形中呈现 */
+  width: 12px;
+  height: 12px;
+
+  /* 让正方形定位到最右边 */
+  right: 0;
+  /* 让正方形居中显示 */
+  /* top = 50%， margin-top = -(height/2) */
+  top: 50%;
+  margin-top: -6px;
+
+  /* 为倒三角的旋转添加过度效果 */
+  transition: transform .5s ease 0s;
+}
+
+/* 为整个下拉菜单添加hover来实现旋转功能 */
+/* 这样子的效果是，不管鼠标放到导航上还是倒三角上，都可以实现倒三角旋转并展示下拉内容 */
+.header-site .first-header .first-header-left > ul >li.have-down-menu:hover .arrow {
+  transform: rotate(180deg);
+}
+
+/* 使用b标签和i标签来画图实现倒三角功能 */
+/* 主要原理是使用遮蔽，用上面的一层，盖住下面的一次 */
+/* 即用i标签，盖住b标签 */
+/* 用正方形的一个角，通过遮蔽，实现倒三角的效果 */
+.header-site .first-header .first-header-left > ul >li.have-down-menu .arrow b{
+  /* 绝对定位到画好的12pz正方形中 */
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #fff;
+  /* 旋转45度，角就出来了 */
+  transform: rotate(45deg);
+
+  /* left = （12px - 6px）/ 2 */
+  /* 具体的值，根据正方形的大小来定，必须保证left = right，不然旋转起来就会变形 */
+  left: 3px;
+  /* top主要是实现遮蔽 */
+  top: 2px;
+}
+.header-site .first-header .first-header-left > ul >li.have-down-menu .arrow i{
+  /* 绝对定位到画好的12pz正方形中 */
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #2a2a2a;
+  transform: rotate(45deg);
+  /* left = （12px - 6px）/ 2 */
+  /* 具体的值，根据正方形的大小来定，必须保证left = right，不然旋转起来就会变形 */
+  left: 3px;
+  /* top主要是实现遮蔽 */
+  top: 0.5px;
+}
+
+/* 展开内容的通用样式 */
+.header-site .first-header .first-header-left > ul >li.have-down-menu .down-menu{
+  /* 首先让需要展开的内容脱离文档流，避免占用其它内容的空间 */
+  position: absolute;
+  top: 31px;
+  left: 0;
+  z-index: 9999;
+  /* 先将下拉菜单隐藏，等鼠标悬停是再显示 */
+  display: none;
+  background-color: white;
+  /* 不在这里添加宽度是因为，不同的下拉菜单宽度都不一致 */
+  /* width: 150px; */
+  /* 阴影效果 */
+  box-shadow: 4px 4px 16px 0 rgba(0, 0, 0, 0.20);
+  /* 给8px的填充是为了美观 */
+  padding: 8px;
+}
+
+/* 当鼠标移动到导航时，显示下拉内容 */
+.header-site .first-header .first-header-left > ul >li.have-down-menu:hover .down-menu{
+  display: block;
+}
+
+/* 设置下拉菜单的宽度 */
+.header-site .first-header .first-header-left > ul >li.have-down-menu .sqmenu{
+  /* 社区 */
+  width: 110px;
+}
+.header-site .first-header .first-header-left > ul >li.have-down-menu .scmenu{
+  /* 商城 */
+  width: 70px;
+}
+.header-site .first-header .first-header-left > ul >li.have-down-menu .jdmsmenu{
+  /* 酒店/民宿 */
+  width: 70px;
+}
+
+/* 定义down-menu-list下的li和a的统一样式 */
+.header-site .first-header .first-header-left > ul >li.have-down-menu .down-menu-list > li{
+  /* 垂直居中 */
+  height: 20px;
+  line-height: 20px;
+}
+.header-site .first-header .first-header-left > ul >li.have-down-menu .down-menu-list >li >a {
+  font-size: 12px;
+  color: black;
+  line-height: 20px;
+}
+/* 给down-menu-list下的a标签，添加悬停某个的效果，改变颜色 */
+.header-site .first-header .first-header-left > ul >li.have-down-menu .down-menu-list >li >a:hover {
+  color: orange;
+}
+
+/* ------- 1.1、社区展开 end ------- */
+
+
+/* ----- 1、左侧导航 end ----- */
+
+
+/* ----- 2、右侧导航 start ----- */
+
+/* 将整个右侧导航右浮动 */
+.header-site .first-header .first-header-right {
+  float: right;
+  /* 固定长度，防止之后调整变形不知道 */
+  width: 225px;
+}
+
+/* 给a标签和span标签都添加间隔，同时将字体大小设置为15px */
+.header-site .first-header .first-header-right a,.header-site .first-header .first-header-right span{
+  margin-right: 11px;
+  font-size: 15px;
+  /* 主要是给span设置颜色 */
+  color: white;
+}
+
+/* 最后一个元素，不需要右边框 */
+.header-site .first-header .first-header-right a:last-child{
+  margin-right: 0;
+}
+
+/* ----- 2、右侧导航 end ----- */
+
+
+/* ---------------------------------------------------第二层导航------------------------------------------------------------------------ */
+/* 第二层导航背景色 */
+.header-site .second-header{
+  min-width: 1152px;
+  background-color: #20BD9A;
+  height: 40px;
+  line-height: 40px;
+}
+.header-site .second-header ul >li {
+  float: left;
+  margin-right: 18px;
+}
+.header-site .second-header ul >li> a{
+  color: white;
+  font-size: 16px;
+}
+
+/* 给li添加右填充，用来存放倒三角 */
+.header-site .second-header ul > li.have-down-menu {
+  position: relative;
+  padding-right: 16px;
+}
+
+/* 画倒三角 */
+/* 在li前插入内容 */
+.header-site .second-header ul > li.have-down-menu::before{
+  content: '';
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  /* 插入内容，定位到右边 */
+  right: 4px;
+  /* top是为了保持三角形居中  */
+  /* top = （40 - 4）/2 ；4px表示边框的厚度 */
+  top: 18px;
+  /* 将所有边框设置为透明 */
+  border: 4px solid transparent;
+  /* 使用边框来实现实心三角形 */
+  /* 我们使用上边框，需将下边框设置为none，这样子是为了在旋转的时候，三角形的位置保持不变 */
+  border-top-color: white;
+  border-bottom: none;
+  transition: transform .5s ease 0s;
+}
+
+/* 我们需要旋转的before插入的内容，而不是整个li，所以需要加上::before */
+.header-site .second-header ul > li.have-down-menu:hover::before {
+  transform: rotate(180deg);
+}
+
+/* 第二层导航下拉选项的通用样式 */
+/* 与第一层导航下拉选项的通用样式一致，可参照  */
+.header-site .second-header ul >li .down-menu{
+  position: absolute;
+  left: 0;
+  background-color: white;
+  box-shadow: 4px 4px 16px 0 rgba(0, 0, 0, 0.20);
+  padding: 8px;
+  top: 35px;
+  /* 隐藏 */
+  display: none;
+}
+.header-site .second-header ul >li:hover .down-menu{
+  /* 显示 */
+  display: block;
+}
+
+/* 设置下拉菜单的宽度 */
+.header-site .second-header ul >li .jdzyxmenu {
+  /* 机酒自由行 */
+  width: 150px;
+}
+.header-site .second-header ul >li .gytmenu {
+  /* 跟团游 */
+  width: 90px;
+}
+.header-site .second-header ul >li .ddylmenu {
+  /* 当地玩乐 */
+  width: 190px;
+}
+.header-site .second-header ul >li .sdlymenu {
+  /* 深度旅游 */
+  width: 160px;
+}
+
+/* 设置dd的line-height 来覆盖.second-header中设置的line-height */
+.header-site .second-header ul >li .down-menu dl dd{
+  line-height: 20px;
+}
+
+/* 设置下拉菜单中的a样式 */
+.header-site .second-header ul >li .down-menu dl dd a{
+  color: black;
+  font-size: 12px;
+  line-height: 20px;
+}
+.header-site .second-header ul >li .down-menu dl dd a:hover{
+  color: orange;
+}
+
+/* ----------------------------------------------第三层导航---------------------------------------------- */
+.header-site .last-header{
+  /* 不使用height来定义完整的高度78px，是为了搜索框的好调整 */
+  height: 36px;
+  padding: 21px 0;
+}
+/* 暮云游商城标题 */
+.header-site .last-header h1 {
+  float: left;
+  font-size: 24px;
+  color: #20BD9A;
+  /* 给字体加粗 */
+  font-weight: bold;
+  line-height: 36px;
+}
+
+/* 整个搜素框 */
+.header-site .last-header .soso-box {
+  float: left;
+  width: 405px;
+  margin-left: 20px;
+  padding: 3px 0;
+}
+/* 搜索框中的输入框 */
+.header-site .last-header .soso-box input{
+  float: left;
+  height: 28px;
+  /* 减去padiing-left的1-px ，即371px - 10px */
+  width: 361px;
+  border: 1px solid #20BD9A;
+  /*  分别对四个角进行设置，左边两个微圆角，右边两个为直角 */
+  border-radius: 4px 0 0 4px;
+  font-size: 14px;
+  /* 取消默认的外线（外线是文本框特有的东西） */
+  outline: none;
+  /* 输入框中的输入文本与输入框贴的太近，不美观 */
+  /* 添加的同时会将原本的宽度增加10px，需减去 */
+  padding-left: 10px;
+}
+/* 输入框中的搜索按钮 */
+.header-site .last-header .soso-box a {
+  float: left;
+  width: 32px;
+  height: 30px;
+  /* 水平垂直居中 */
+  line-height: 30px;
+  text-align: center;
+  background-color: #20BD9A;
+  color: white;
+  border-radius: 0 4px 4px 0;
+  font-size: 18px;
+}
